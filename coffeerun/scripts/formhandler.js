@@ -32,39 +32,18 @@
       });
     };
   }
+  FormHandler.prototype.addInputHandler = function(fn) {
+    console.log('Setting input handler for form');
+    this.$formElement.on('input', '[name="emailAddress"]', function(event) {
+      var emailAddress = event.target.value;
+      if (fn(emailAddress)) {
+        event.target.setCustomValidity('');
+      } else {
+        event.target.setCustomValidity(emailAddress + ' is not an authorized email address!');
+      }
+    });
+  };
 
   App.FormHandler = FormHandler;
   window.App = App;
 })(window);
-
-
-
-// (function (window) {
-//   'use strict';
-//   var App = window.App || {};
-//   var $ = window.jQuery;
-
-//   function SubmitHandler(selector) {
-//     if (!selector) {
-//       throw new Error('no selector provided')
-//     }
-
-//     this.$formElement = $(selector);
-//     if (this.$formElement.length === 0) {
-//       throw new Error('Could not find element with this selector: ' + selector);
-//     }
-//   }
-
-//   SubmitHandler.prototype.addSubmitHandler = function() {
-//     console.log('Setting submit handler for form');
-//     this.$formElement.on('submit', function(event) {
-//       event.preventDefault();
-
-//       var data = $(this).serializeArray();
-//       console.log(data);
-//     });
-//   };
-
-//   App.SubmitHandler = SubmitHandler;
-//   window.App = App;
-// })(window);
